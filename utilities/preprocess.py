@@ -10,7 +10,7 @@ def preprocess_eeg_data(X, sfreq=config.EPOC_SFREQ, bandpass=config.BANDPASS_FRE
     ch_names = [f'EEG{i:03d}' for i in range(X.shape[0])]
     info = mne.create_info(ch_names=ch_names, sfreq=sfreq, ch_types='eeg')
 
-    X_processed = []
+    X_processed = np.zeros(X)
 
     for i in tqdm(range(X.shape[0]), desc="Preprocessing"):
         raw = mne.io.RawArray(X[i].copy(), info, verbose=False)
