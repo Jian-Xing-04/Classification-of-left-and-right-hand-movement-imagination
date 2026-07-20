@@ -16,7 +16,7 @@ EPOC_NEW_LABEL_MAP = {
 }
 
 # ==================== EDF Dataset ====================
-EDF_DATA_DIR = PROJECT_ROOT / "data" / "edf_data"
+EDF_DATA_DIR = PROJECT_ROOT / "data" / "after_data"
 
 EDF_LABEL_MAP = {
     'left': 2,
@@ -52,6 +52,7 @@ EPOC_STEP_SEC = 1.0
 BANDPASS_FREQ = (0.5, 45.0)
 NOTCH_FREQ = 50.0
 IIR_ORDER = 4
+BANDPASS_sFREQ=(4,50)
 
 # ==================== EEGNet Model ====================
 EEGNET_F1 = 16         # 时序卷积滤波器数量 (8→16)

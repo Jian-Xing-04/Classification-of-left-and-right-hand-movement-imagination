@@ -48,7 +48,7 @@ def _get_subject_name(filename):
 
 
 def load_edf_dataset(data_dir=config.EDF_DATA_DIR,
-                     sfreq=config.EPOC_SFREQ,
+                     sfreq=config.BANDPASS_sFREQ,
                      window_sec=2.0, step_sec=1.0,
                      labels=['left', 'right', 'idle'],
                      subject=None):
