@@ -1,0 +1,90 @@
+D:\PycharmProjects\EEGproject\.venv\Scripts\python.exe D:\PycharmProjects\EEGproject\edf\edf_main.py
+==================================================
+Step 1: 加载EDF数据 (左右手想象与休息)
+==================================================
+未找到缓存，开始处理数据...
+找到 3 个EDF文件
+加载EDF文件:   0%|          | 0/3 [00:00<?, ?it/s]D:\PycharmProjects\EEGproject\edf\edf_data_loader.py:73: RuntimeWarning: Invalid patient information
+  raw = mne.io.read_raw_edf(str(edf_file), preload=True, verbose=False)
+加载EDF文件:  33%|███▎      | 1/3 [00:05<00:10,  5.41s/it]D:\PycharmProjects\EEGproject\edf\edf_data_loader.py:73: RuntimeWarning: Invalid patient information
+  raw = mne.io.read_raw_edf(str(edf_file), preload=True, verbose=False)
+加载EDF文件:  67%|██████▋   | 2/3 [00:09<00:04,  4.48s/it]D:\PycharmProjects\EEGproject\edf\edf_data_loader.py:73: RuntimeWarning: Invalid patient information
+  raw = mne.io.read_raw_edf(str(edf_file), preload=True, verbose=False)
+加载EDF文件: 100%|██████████| 3/3 [00:12<00:00,  4.29s/it]
+
+EDF数据集加载完成: 3236 个样本, 14 通道, 256 时间点/段
+标签分布: {np.int64(0): np.int64(1134), np.int64(1): np.int64(1053), np.int64(2): np.int64(1049)}
+Preprocessing:   0%|          | 0/3236 [00:00<?, ?it/s]标签映射: {'left': 0, 'right': 1, 'idle': 2}
+
+==================================================
+Step 2: 预处理 (带通滤波 + 陷波滤波)
+==================================================
+Preprocessing: 100%|██████████| 3236/3236 [00:45<00:00, 71.68it/s]
+预处理后数据形状: (3236, 14, 256)
+
+保存缓存到: edf_processed_e0df5689.npz
+缓存已保存
+标签映射: {'left': 0, 'right': 1, 'idle': 2}
+数据形状: (3236, 14, 256)
+
+==================================================
+Step 2: 划分训练集/验证集/测试集 (70/15/15)
+==================================================
+训练集: 2265 样本
+验证集: 485 样本
+测试集: 486 样本
+
+==================================================
+Step 3: 训练 EEGNet
+==================================================
+模型参数量: 3,939
+运行设备: cuda
+Epoch [  1/200]  Loss: 1.1269  Acc: 0.3338  Val_Loss: 1.1022  Val_Acc: 0.3320  (best)
+Epoch [ 10/200]  Loss: 1.0803  Acc: 0.3991  Val_Loss: 1.0968  Val_Acc: 0.3856  (best)
+Epoch [ 20/200]  Loss: 1.0580  Acc: 0.4331  Val_Loss: 1.0858  Val_Acc: 0.3876  (best)
+Epoch [ 30/200]  Loss: 1.0436  Acc: 0.4353  Val_Loss: 1.0850  Val_Acc: 0.4000
+Epoch [ 40/200]  Loss: 1.0373  Acc: 0.4468  Val_Loss: 1.0766  Val_Acc: 0.4165  (best)
+Epoch [ 50/200]  Loss: 1.0184  Acc: 0.4733  Val_Loss: 1.0796  Val_Acc: 0.4186
+Epoch [ 60/200]  Loss: 1.0164  Acc: 0.4781  Val_Loss: 1.0775  Val_Acc: 0.4144
+Epoch [ 70/200]  Loss: 1.0102  Acc: 0.4826  Val_Loss: 1.0777  Val_Acc: 0.4351
+Epoch [ 80/200]  Loss: 0.9952  Acc: 0.4901  Val_Loss: 1.0749  Val_Acc: 0.4392  (best)
+
+Early stopping at epoch 85 (验证集 acc 20 轮未提升)
+已恢复最佳模型权重 (Val_Acc: 0.4392)
+
+训练完成 | 验证集最佳准确率: 0.4392
+
+==================================================
+Step 4: 保存模型
+==================================================
+模型已保存至: D:\PycharmProjects\EEGproject\saved_models\eegnet_edf_best.pth
+
+==================================================
+Step 5: 测试集独立评估
+==================================================
+
+测试集总体准确率: 0.4053
+
+分类报告:
+              precision    recall  f1-score   support
+
+        left     0.4365    0.3235    0.3716       170
+       right     0.3961    0.3861    0.3910       158
+        idle     0.3932    0.5127    0.4451       158
+
+    accuracy                         0.4053       486
+   macro avg     0.4086    0.4074    0.4026       486
+weighted avg     0.4093    0.4053    0.4018       486
+
+混淆矩阵:
+                left     right      idle
+      left        55        51        64
+     right        36        61        61
+      idle        35        42        81
+
+训练曲线摘要:
+  初始 Val_Acc: 0.3320
+  最终 Val_Acc: 0.4351
+  最佳 Val_Acc: 0.4392 (Epoch 65)
+
+进程已结束，退出代码为 0
