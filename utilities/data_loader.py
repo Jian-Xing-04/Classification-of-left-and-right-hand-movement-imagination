@@ -108,8 +108,8 @@ def load_epoc_dataset(data_dir=config.EPOC_DATA_DIR,
     if not all_segments:
         raise RuntimeError("未能从数据集中加载任何有效样本")
 
-    X = np.concatenate(all_segments, axis=0)
-    y = np.concatenate(all_labels, axis=0)
+    X = np.concatenate(all_segments, axis=1)
+    y = np.concatenate(all_labels, axis=1)
 
     label_map = {k: config.EPOC_LABEL_MAP[k] for k in labels if k in config.EPOC_LABEL_MAP}
 
@@ -117,7 +117,7 @@ def load_epoc_dataset(data_dir=config.EPOC_DATA_DIR,
           f"{X.shape[1]} 通道, {X.shape[2]} 时间点/段")
     print(f"标签分布: {dict(zip(*np.unique(y, return_counts=True)))}")
 
-    return X, y, label_map
+    return y, X, label_map
 
 
 if __name__ == "__main__":
